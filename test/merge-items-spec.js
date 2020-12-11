@@ -1,13 +1,29 @@
 const { expect } = require('chai');
 const { mergeItems } = require('../merge-items');
+
+
 describe("The mergeItems function", () => {
   const template = `
-    <table>
-      <tbody>
-        <!-- Content here -->
-      </tbody>
-    </table>
-  `;
+  <table>
+    <tbody>
+      {{#each items}}
+        <tr>
+          <td>{{ add @index 1 }}</td>
+          <td>{{ title }}</td>
+          <td>{{ category }}</td>
+          <td>
+            {{#if isComplete}}
+            {{else}}
+              <form method="POST" action="/items/{{ add @index 1 }}">
+                <button class="pure-button">Complete</button>
+              </form>
+            {{/if}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+`;
   it("should return no <tr>s and no <td>s for no items", () => {
     const items = [];
 
@@ -53,7 +69,7 @@ describe("The mergeItems function", () => {
     expect(result).to.contain("<tr>");
     expect(result).to.contain("</tr>");
     expect(result).to.contain("<td>1</td>");
-    expect(result).to.contain("<td></td>")
+    expect(result).to.contain("<td>          </td>")
     expect(result).to.contain("<td>Title 1</td>");
     expect(result).to.contain("<td>Category 1</td>");
     expect(result).to.not.contain('<form method="POST" action="/items/1">');

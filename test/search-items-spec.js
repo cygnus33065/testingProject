@@ -6,7 +6,8 @@ describe("The searchItems function", () => {
     // Declare the items and term variables, here.
     // Items should be an empty array.
     // Term should be a non-empty term.
-
+    const items = []
+    const term = 'sting'
     // ACT
     const result = searchItems(items, term);
 
@@ -28,7 +29,11 @@ describe("The searchItems function", () => {
 
     // ASSERT
     // Fix this assertion to be correct
-    expect.fail('make this assert the proper length of the result.');
+    expect(result).to.eql([
+      {title: 'It is 1', category: 'Category 1'},
+      {title: 'THIS IS 2', category: 'Category 2'},
+      {title: 'I am 1', category: 'Category 3'},
+    ]);
   });
 
   it('Returns items whose title contains the term, case insensitive', () => {
@@ -40,7 +45,7 @@ describe("The searchItems function", () => {
     ];
     // Set term to a string that will return only two
     // of the items from the above collection.
-    const term = null;
+    const term = 'is';
 
     // ACT
     const result = searchItems(items, term);
